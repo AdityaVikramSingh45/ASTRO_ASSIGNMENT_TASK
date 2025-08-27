@@ -58,7 +58,7 @@ function Offer() {
   return (
     <div className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-12 flex justify-center items-center flex-col">
         <Button className="flex items-center justify-center gap-2 m-3 bg-amber-300 text-red-900 hover:text-white">
           <Play className="w-5 h-5" />
           Video Content
