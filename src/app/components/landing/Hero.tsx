@@ -120,6 +120,7 @@ export default function Home() {
           <Image
             src="/astro.png"
             alt="Hero Image"
+            className="rounded-lg"
             width={800} // replace with actual width
             height={600} // replace with actual height
             priority // optional, for LCP images
