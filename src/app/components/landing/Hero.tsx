@@ -77,7 +77,7 @@ export default function Home() {
               btn.type === "primary" ? (
                 <Button
                   key={i}
-                  className="bg-blue-800 px-6 py-4 md:px-12 md:py-8 text-sm md:text-lg"
+                  className="bg-blue-800 px-9 py-3 md:px-12 md:py-8 text-sm md:text-lg rounded-lg"
                 >
                   <CalendarFold />
                   {btn.text}
@@ -85,7 +85,7 @@ export default function Home() {
               ) : (
                 <Button
                   key={i}
-                  className="bg-transparent text-black border border-black hover:text-white px-6 py-4 md:px-10 md:py-8 text-sm md:text-lg "
+                  className="bg-transparent text-black border border-black hover:text-white px-9 py-3 md:px-10 md:py-8 text-sm md:text-lg "
                 >
                   <Phone />
                   {btn.text}
