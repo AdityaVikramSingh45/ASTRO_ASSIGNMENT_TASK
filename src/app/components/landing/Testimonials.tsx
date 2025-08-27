@@ -33,8 +33,12 @@ function Testimonials() {
         if (!res.ok) throw new Error("Failed to fetch testimonials data.");
         const fetchedData: TestimonialsData = await res.json();
         setData(fetchedData);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError(String(err));
+        }
       } finally {
         setLoading(false);
       }
@@ -82,9 +86,11 @@ function Testimonials() {
               className="relative group overflow-hidden rounded-xl shadow-lg cursor-pointer h-72 sm:h-64 md:h-72"
             >
               {/* Image */}
-              <img
-                src={"guyImage.jpg"}
+              <Image
+                src="/guyImage.jpg" // Ensure this path exists in /public/images
                 alt={client.name}
+                width={400}
+                height={400}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
 
@@ -121,7 +127,7 @@ function Testimonials() {
           Limited-Time Offer!
         </div>
         <div className="text-gray-700 text-sm sm:text-base mb-8 px-2 sm:px-4 flex flex-col text-center">
-          <span>Get 'The Guide' now and enjoy a special one-month free access to our</span>
+          <span>Get &apos;The Guide&apos; now and enjoy a special one-month free access to our</span>
           <span>upcoming AI-scoring platform with over 5000 test questions. Act fast - this</span>
           <span>offer expires in [Countdown Timer]</span>
         </div>
@@ -137,12 +143,12 @@ function Testimonials() {
           ))}
         </div>
 
-        <button className="bg-violet-600 hover:bg-violet-700 text-white font-semibold py-3 px-4 sm:py-3 sm:px-6 rounded-lg transition-colors flex items-center justify-center mx-auto">
+        <Button className="bg-violet-600 hover:bg-violet-700 text-white font-semibold py-3 px-4 sm:py-3 sm:px-6 rounded-lg transition-colors flex items-center justify-center mx-auto">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M10 2a1 1 0 011 1v2.293l1.854-1.854a1 1 0 011.414 1.414l-2.5 2.5a1 1 0 01-1.414 0l-2.5-2.5a1 1 0 011.414-1.414L9 5.293V3a1 1 0 011-1zM5 10a1 1 0 011 1v5a1 1 0 001 1h6a1 1 0 001-1v-5a1 1 0 112 0v5a3 3 0 01-3 3H7a3 3 0 01-3-3v-5a1 1 0 011-1z" clipRule="evenodd" />
           </svg>
           Visit Now
-        </button>
+        </Button>
       </div>
     </div>
   );

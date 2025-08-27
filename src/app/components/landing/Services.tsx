@@ -30,9 +30,30 @@ function Services() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // useEffect(() => {
+  //   const API_URL = "/api/cosmic-services";
+
+  //   async function fetchServices() {
+  //     try {
+  //       const res = await fetch(API_URL);
+  //       if (!res.ok) {
+  //         throw new Error("Failed to fetch services data.");
+  //       }
+  //       const fetchedData: ServicesData = await res.json();
+  //       setData(fetchedData);
+  //     } catch (err: any) {
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+
+  //   fetchServices();
+  // }, []);
+
   useEffect(() => {
     const API_URL = "/api/cosmic-services";
-
+  
     async function fetchServices() {
       try {
         const res = await fetch(API_URL);
@@ -41,15 +62,20 @@ function Services() {
         }
         const fetchedData: ServicesData = await res.json();
         setData(fetchedData);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError(String(err));
+        }
       } finally {
         setLoading(false);
       }
     }
-
+  
     fetchServices();
   }, []);
+  
 
   if (loading) {
     return <div className="text-center py-16">Loading services...</div>;

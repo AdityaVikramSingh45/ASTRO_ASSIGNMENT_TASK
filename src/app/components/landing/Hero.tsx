@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Pathway_Gothic_One } from "next/font/google";
 import { useEffect, useState } from "react";
-import {CalendarFold, Phone, RectangleCircle, Square, Sun} from "lucide-react"
+import { CalendarFold, Phone, Square } from "lucide-react";
+import Image from "next/image";
 
 // Define the data interfaces
 interface HeroData {
@@ -29,14 +29,14 @@ export default function Home() {
   useEffect(() => {
     // Simulate API call delay
     async function fetchData() {
-        const res = await fetch("/api/hero")
-        const jsonData = await res.json();
-        console.log("jsonData", jsonData)
+      const res = await fetch("/api/hero");
+      const jsonData = await res.json();
+      console.log("jsonData", jsonData);
 
-        const serviceRes = await fetch("/api/services");
-        const serviceData = await serviceRes.json();
-        setServices(serviceData);
-        setHero(jsonData);
+      const serviceRes = await fetch("/api/services");
+      const serviceData = await serviceRes.json();
+      setServices(serviceData);
+      setHero(jsonData);
     }
     fetchData();
   }, []);
@@ -44,7 +44,9 @@ export default function Home() {
   if (!hero) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-yellow-100 to-purple-100">
-        <p className="text-center p-10 text-xl font-medium text-gray-700">Loading...</p>
+        <p className="text-center p-10 text-xl font-medium text-gray-700">
+          Loading...
+        </p>
       </div>
     );
   }
@@ -73,14 +75,20 @@ export default function Home() {
           <div className="flex flex-wrap gap-4 mt-6">
             {hero.cta.map((btn, i) =>
               btn.type === "primary" ? (
-                <Button key={i} className="bg-blue-800 px-6 py-4 md:px-12 md:py-8 text-sm md:text-lg">
-                    <CalendarFold/>
-                    {btn.text}
+                <Button
+                  key={i}
+                  className="bg-blue-800 px-6 py-4 md:px-12 md:py-8 text-sm md:text-lg"
+                >
+                  <CalendarFold />
+                  {btn.text}
                 </Button>
               ) : (
-                <Button key={i} className="bg-transparent text-black border border-black hover:text-white px-6 py-4 md:px-10 md:py-8 text-sm md:text-lg ">
-                    <Phone/>
-                    {btn.text}
+                <Button
+                  key={i}
+                  className="bg-transparent text-black border border-black hover:text-white px-6 py-4 md:px-10 md:py-8 text-sm md:text-lg "
+                >
+                  <Phone />
+                  {btn.text}
                 </Button>
               )
             )}
@@ -89,25 +97,32 @@ export default function Home() {
           {/* Stats */}
           <div className="flex flex-wrap gap-4 md:gap-8 mt-10">
             {hero.stats.map((stat, i) => (
-              <div key={i} className="flex flex-col items-center text-center w-full sm:w-auto">
-              <div className="flex items-center gap-2 mb-2">
-                <Square className="w-8 h-8 md:w-10 md:h-10 text-purple-700 fill-current" />
-                <p className="text-2xl md:text-4xl font-bold text-purple-700">
-                  {stat.value}
+              <div
+                key={i}
+                className="flex flex-col items-center text-center w-full sm:w-auto"
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <Square className="w-8 h-8 md:w-10 md:h-10 text-purple-700 fill-current" />
+                  <p className="text-2xl md:text-4xl font-bold text-purple-700">
+                    {stat.value}
+                  </p>
+                </div>
+                <p className="text-gray-600 text-sm md:text-base">
+                  {stat.label}
                 </p>
               </div>
-              <p className="text-gray-600 text-sm md:text-base">{stat.label}</p>
-            </div>
             ))}
           </div>
         </div>
 
         {/* IMAGE */}
         <div className="relative">
-          <img
-            src={hero.image}
-            alt="Astrologer"
-            className="rounded-2xl shadow-lg w-full h-auto"
+          <Image
+            src="/astro.png"
+            alt="Hero Image"
+            width={800} // replace with actual width
+            height={600} // replace with actual height
+            priority // optional, for LCP images
           />
         </div>
       </section>

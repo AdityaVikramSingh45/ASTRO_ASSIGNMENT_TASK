@@ -32,24 +32,48 @@ function Offer() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const API_URL = "/api/video-wisdom";
+//   useEffect(() => {
+//     const API_URL = "/api/video-wisdom";
 
+//     async function fetchVideos() {
+//       try {
+//         const res = await fetch(API_URL);
+//         if (!res.ok) throw new Error("Failed to fetch video data.");
+//         const fetchedData: VideoData = await res.json();
+//         setData(fetchedData);
+//       } catch (err: any) {
+//         setError(err.message);
+//       } finally {
+//         setLoading(false);
+//       }
+//     }
+
+//     fetchVideos();
+//   }, []);
+
+useEffect(() => {
+    const API_URL = "/api/video-wisdom";
+  
     async function fetchVideos() {
       try {
         const res = await fetch(API_URL);
         if (!res.ok) throw new Error("Failed to fetch video data.");
         const fetchedData: VideoData = await res.json();
         setData(fetchedData);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError(String(err));
+        }
       } finally {
         setLoading(false);
       }
     }
-
+  
     fetchVideos();
   }, []);
+  
 
   if (loading) return <div className="text-center py-16">Loading videos...</div>;
   if (error) return <div className="text-center py-16 text-red-500">Error: {error}</div>;
