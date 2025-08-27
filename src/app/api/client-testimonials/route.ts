@@ -40,6 +40,35 @@ export async function GET() {
         image: "https://placehold.co/400x400/D9D9D9/A6A6A6?text=Olivia",
         testimonial: "The guidance was incredibly precise and helped me navigate major life decisions.",
       },
+      {
+        id: 6,
+        name: "Olivia",
+        role: "Sculpture • White Angel",
+        image: "https://placehold.co/400x400/D9D9D9/A6A6A6?text=Olivia",
+        testimonial: "The guidance was incredibly precise and helped me navigate major life decisions.",
+      },
+      {
+        id: 7,
+        name: "Olivia",
+        role: "Sculpture • White Angel",
+        image: "https://placehold.co/400x400/D9D9D9/A6A6A6?text=Olivia",
+        testimonial: "The guidance was incredibly precise and helped me navigate major life decisions.",
+      },
+      {
+        id: 8,
+        name: "Olivia",
+        role: "Sculpture • White Angel",
+        image: "https://placehold.co/400x400/D9D9D9/A6A6A6?text=Olivia",
+        testimonial: "The guidance was incredibly precise and helped me navigate major life decisions.",
+      },
+      {
+        id: 9,
+        name: "Olivia",
+        role: "Sculpture • White Angel",
+        image: "https://placehold.co/400x400/D9D9D9/A6A6A6?text=Olivia",
+        testimonial: "The guidance was incredibly precise and helped me navigate major life decisions.",
+      },
+
     ],
   });
 }

@@ -2,8 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"; // Import new icons for navigation
 import { Button } from "@/components/ui/button";
+
+// Swiper components and styles
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Navigation, Pagination } from "swiper/modules";
 
 interface Client {
   id: number;
@@ -61,7 +68,9 @@ function Testimonials() {
             Client Testimonials
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
-            <span className="text-gray-900 dark:text-white">What Our Clients</span>{" "}
+            <span className="text-gray-900 dark:text-white">
+              What Our Clients
+            </span>{" "}
             <span className="text-purple-600">Say About Us</span>
           </h2>
           <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-8">
@@ -78,74 +87,125 @@ function Testimonials() {
           </div>
         </div>
 
-        {/* Clients Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
-          {data.clients.map((client) => (
-            <div
-              key={client.id}
-              className="relative group overflow-hidden rounded-xl shadow-lg cursor-pointer h-72 sm:h-64 md:h-72"
-            >
-              {/* Image */}
-              <Image
-                src="/guyImage.jpg" // Ensure this path exists in /public/images
-                alt={client.name}
-                width={400}
-                height={400}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
+        {/* Swiper Testimonials Section */}
+        <div className="relative max-w-7xl mx-auto">
+          <Swiper
+            spaceBetween={24}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
+              1024: { slidesPerView: 4 },
+              1280: { slidesPerView: 5 },
+            }}
+            modules={[Pagination, Navigation]}
+            className="mySwiper !pb-12"
+            pagination={{
+              clickable: true,
+              dynamicBullets: true,
+              bulletActiveClass: "!bg-purple-600",
+            }}
+            navigation={{
+              prevEl: ".swiper-button-prev",
+              nextEl: ".swiper-button-next",
+            }}
+          >
+            {data.clients.map((client) => (
+              <SwiperSlide key={client.id}>
+                <div className="relative group overflow-hidden rounded-xl shadow-lg cursor-pointer h-72 sm:h-64 md:h-72">
+                  {/* Image */}
+                  <Image
+                    src="/guyImage.jpg"
+                    alt={client.name}
+                    width={400}
+                    height={400}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
 
-              {/* Text at top-left */}
-              <div className="absolute top-0 left-0 p-4">
-                <div className="text-white text-left">
-                  <p className="font-semibold text-sm sm:text-lg">
-                    {client.role.split(" • ")[0]}
-                  </p>
-                  <p className="text-lg sm:text-xl font-bold">
-                    {client.role.split(" • ")[1]}
-                  </p>
+                  {/* Text at top-left */}
+                  <div className="absolute top-0 left-0 p-4">
+                    <div className="text-white text-left">
+                      <p className="font-semibold text-sm sm:text-lg">
+                        {client.role.split(" • ")[0]}
+                      </p>
+                      <p className="text-lg sm:text-xl font-bold">
+                        {client.role.split(" • ")[1]}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Gradient at bottom */}
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+
+                  {/* Testimonial overlay */}
+                  <div className="absolute inset-x-0 top-1/2 flex items-center justify-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 p-4">
+                    <p className="text-xs sm:text-sm font-light text-center">
+                      {client.testimonial}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
 
-              {/* Gradient at bottom */}
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+          {/* Custom Navigation Buttons */}
+          <div className="swiper-button-prev absolute top-1/2 -left-4 z-30 transform -translate-y-1/2 bg-transparent rounded-full p-3 shadow-lg cursor-pointer hidden md:flex items-center justify-center text-red-600 hover:text-white hover:bg-transparent transition-all duration-300 ease-in-out hover:scale-110">
+            <ChevronLeft className="w-6 h-6" />
+          </div>
 
-              {/* Testimonial overlay */}
-              <div className="absolute inset-x-0 top-1/2 flex items-center justify-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 p-4">
-                <p className="text-xs sm:text-sm font-light text-center">
-                  {client.testimonial}
-                </p>
-              </div>
-            </div>
-          ))}
+          <div className="swiper-button-next absolute top-1/2 -right-4 z-30 transform -translate-y-1/2 bg-transparent rounded-full p-3 shadow-lg cursor-pointer hidden md:flex items-center justify-center text-purple-600 hover:text-white hover:bg-transparent transition-all duration-300 ease-in-out hover:scale-110">
+            <ChevronRight className="w-6 h-6" />
+          </div>
         </div>
       </div>
 
       {/* Webinar Offer Section */}
       <div className="bg-gradient-to-br from-[#ffdfd6] via-[#d6e2ff] to-[#fff8d6] p-6 sm:p-10 rounded-xl text-center shadow-lg max-w-full my-10">
-        <div className="text-gray-600 text-base sm:text-lg mb-1">Join Our Webinar</div>
+        <div className="text-gray-600 text-base sm:text-lg mb-1">
+          Join Our Webinar
+        </div>
         <div className="text-2xl sm:text-4xl font-extrabold text-gray-800 mb-4 leading-tight">
           Limited-Time Offer!
         </div>
         <div className="text-gray-700 text-sm sm:text-base mb-8 px-2 sm:px-4 flex flex-col text-center">
-          <span>Get &apos;The Guide&apos; now and enjoy a special one-month free access to our</span>
-          <span>upcoming AI-scoring platform with over 5000 test questions. Act fast - this</span>
+          <span>
+            Get &apos;The Guide&apos; now and enjoy a special one-month free
+            access to our
+          </span>
+          <span>
+            upcoming AI-scoring platform with over 5000 test questions. Act fast
+            - this
+          </span>
           <span>offer expires in [Countdown Timer]</span>
         </div>
 
         <div className="flex flex-wrap justify-center gap-4 mb-10">
           {["Days", "Hour", "Minute", "Second"].map((label, idx) => (
-            <div key={idx} className="bg-white p-3 sm:p-4 rounded-lg shadow-md w-20 sm:w-24">
+            <div
+              key={idx}
+              className="bg-white p-3 sm:p-4 rounded-lg shadow-md w-20 sm:w-24"
+            >
               <div className="text-3xl sm:text-4xl font-bold text-blue-500">
                 {["24", "06", "22", "59"][idx]}
               </div>
-              <div className="text-gray-500 text-xs sm:text-xs uppercase mt-1">{label}</div>
+              <div className="text-gray-500 text-xs sm:text-xs uppercase mt-1">
+                {label}
+              </div>
             </div>
           ))}
         </div>
 
         <Button className="bg-violet-600 hover:bg-violet-700 text-white font-semibold py-3 px-4 sm:py-3 sm:px-6 rounded-lg transition-colors flex items-center justify-center mx-auto">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M10 2a1 1 0 011 1v2.293l1.854-1.854a1 1 0 011.414 1.414l-2.5 2.5a1 1 0 01-1.414 0l-2.5-2.5a1 1 0 011.414-1.414L9 5.293V3a1 1 0 011-1zM5 10a1 1 0 011 1v5a1 1 0 001 1h6a1 1 0 001-1v-5a1 1 0 112 0v5a3 3 0 01-3 3H7a3 3 0 01-3-3v-5a1 1 0 011-1z" clipRule="evenodd" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 2a1 1 0 011 1v2.293l1.854-1.854a1 1 0 011.414 1.414l-2.5 2.5a1 1 0 01-1.414 0l-2.5-2.5a1 1 0 011.414-1.414L9 5.293V3a1 1 0 011-1zM5 10a1 1 0 011 1v5a1 1 0 001 1h6a1 1 0 001-1v-5a1 1 0 112 0v5a3 3 0 01-3 3H7a3 3 0 01-3-3v-5a1 1 0 011-1z"
+              clipRule="evenodd"
+            />
           </svg>
           Visit Now
         </Button>
